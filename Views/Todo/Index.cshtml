@@ -1,0 +1,59 @@
+﻿@*@model IEnumerable<ToDoList.Models.ToDo>;*@
+@model ToDoViewModel;
+@{
+    ViewData["Title"] = "To Do Application";
+}
+
+<div class="text-center">
+    <h1 class="display-4 pt-4">My Todo List</h1>
+    <div class="container-fluid w-50">
+
+        <form method="post" asp-action="Create">
+            <div class="row pt-4">
+                <div class="col-10">
+                    <input type="text" class="w-100 h-100" id="new-todo" aria-describedby="enter new to do" placeholder="Your todo..." asp-for="@Model.ToDo.Description">
+                </div>
+                <div class="col-2">
+                    <input type="submit" class="btn btn-success" value="Save"/>
+                </div>
+            </div>
+        </form>
+
+
+        @if (Model.ToDoCollection.Count() > 0)
+        {
+            <div class="row">
+                <div class="col pt-4">
+                    <ul class="list-group">
+
+                        @foreach (var todo in Model.ToDoCollection)
+                        {
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p>@todo.Description</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" class="btn btn-primary">Toggle</button>
+
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        }
+        else
+        {
+            <h1 class="display-5 pt-4">No ToDos Created Yet!</h1>
+        }
+
+    </div>
+
+
+</div>
