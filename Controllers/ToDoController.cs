@@ -24,8 +24,6 @@ namespace ToDoList.Controllers
             ToDoViewModel toDosModels = new ToDoViewModel();
             toDosModels.ToDoCollection = _db.ToDos;
             toDosModels.ToDo = new ToDo();
-            // ToDo toDoModel = new ToDo();
-            // IEnumerable<ToDo> toDoCollection = _db.ToDos;
             return View(toDosModels);
         }
 
@@ -35,6 +33,27 @@ namespace ToDoList.Controllers
         public IActionResult Create(ToDo obj)
         {
             _db.ToDos.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // POST - Update
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Toggle(ToDo obj)
+        {
+            obj.IsCompleted = !obj.IsCompleted;
+            _db.ToDos.Update(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // POST - Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(ToDo obj)
+        {
+            _db.ToDos.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

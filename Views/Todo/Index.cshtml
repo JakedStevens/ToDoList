@@ -11,10 +11,11 @@
         <form method="post" asp-action="Create">
             <div class="row pt-4">
                 <div class="col-10">
-                    <input type="text" class="w-100 h-100" id="new-todo" aria-describedby="enter new to do" placeholder="Your todo..." asp-for="@Model.ToDo.Description">
+                    <input type="text" class="w-100 h-100" id="new-todo" aria-describedby="enter new to do"
+                           placeholder="Your todo..." asp-for="@Model.ToDo.Description" name="Description">
                 </div>
                 <div class="col-2">
-                    <input type="submit" class="btn btn-success" value="Save"/>
+                    <input type="submit" class="btn btn-success" value="Save" />
                 </div>
             </div>
         </form>
@@ -31,14 +32,27 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-8">
-                                        <p>@todo.Description</p>
+                                        @if (@todo.IsCompleted)
+                                        {
+                                            <s>@todo.Description</s>
+                                        }
+                                        else
+                                        {
+                                            <p>@todo.Description</p>
+                                        }
                                     </div>
-                                    <div class="col-2">
-                                        <button type="button" class="btn btn-primary">Toggle</button>
 
+                                    <div class="col-2">
+                                        @using (Html.BeginForm("Toggle", "ToDo", @todo, FormMethod.Post))
+                                        {
+                                            <input type="submit" class="btn btn-primary" value="Toggle" />
+                                        }
                                     </div>
                                     <div class="col-2">
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                        @using (Html.BeginForm("Delete", "ToDo", @todo, FormMethod.Post))
+                                        {
+                                            <input type="submit" class="btn btn-danger" value="Delete" />
+                                        }
                                     </div>
                                 </div>
                             </li>

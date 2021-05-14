@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ToDoList.Models
 {
     public class ToDo
     {
         [Key]
+        [BindProperty]
         public int Id
         {
             get { return id; }
@@ -23,17 +25,6 @@ namespace ToDoList.Models
         {
             get { return isCompleted; }
             set { isCompleted = value; }
-        }
-
-
-        public void Toggle()
-        {
-            this.IsCompleted = !this.IsCompleted;
-        }
-
-        public void Delete()
-        {
-
         }
 
         private bool isCompleted;
